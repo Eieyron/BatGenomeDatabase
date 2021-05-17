@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models.fields import BooleanField
 
 class Strain(models.Model):
 
@@ -12,7 +11,7 @@ class Strain(models.Model):
     temperature = models.FloatField()
     temperature_type = models.CharField(max_length = 256)
     temperature_range = models.CharField(max_length = 256)
-    # reference_list  =  
+    reference_list  =  models.JSONField()
     
     def __str__(self):
         return self.name
