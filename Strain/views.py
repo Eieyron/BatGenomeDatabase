@@ -20,6 +20,26 @@ class StrainViewSet(viewsets.ModelViewSet):
 
     filter_backends = [DjangoFilterBackend]
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+
+        # print("test_")
+        # print(serializer.data)
+        to_return = serializer.data
+
+        for item in to_return:
+            item['domain'] = Domain.objects.get(pk=item['domain']).name
+            item['phylum'] = Phylum.objects.get(pk=item['phylum']).name
+            item['order'] = Order.objects.get(pk=item['order']).name
+            item['class_name'] = Class.objects.get(pk=item['class_name']).name
+            item['family'] = Family.objects.get(pk=item['family']).name
+            item['genus'] = Genus.objects.get(pk=item['genus']).name
+            item['species'] = Species.objects.get(pk=item['species']).name
+
+
+        return Response(to_return)
+
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
@@ -35,6 +55,6 @@ class StrainViewSet(viewsets.ModelViewSet):
         data['genus'] = (GenusSerializer(instance.genus)).data
         data['species'] = (SpeciesSerializer(instance.species)).data
 
-        print(data)
+        # print(data)
 
         return Response(data)

@@ -10,6 +10,7 @@ class StrainSerializer(serializers.ModelSerializer):
     class Meta:
         model = Strain
         fields = [
+            'id',
             'name',
             'type_strain',
             'scientific_name',

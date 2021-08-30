@@ -1,0 +1,50 @@
+.thandler{
+    width: 100vw;
+    text-align: center;
+    /* justify-content: center;  */
+    /* display: flex; */
+    /* padding-left: 1000px; */
+    /* background-color: brown; */
+}
+
+.sectionTitle{
+    padding: 20px;
+    font-size: 30px;
+}
+
+.domain{
+    margin-bottom: 10px;
+    /* background-color: brown; */
+}
+
+.info_handler{
+    display: flex;
+    /* justify-content: center; */
+    text-align: justify;
+    width: 50%;
+    margin-left: 35vw;
+    /* background-color: brown; */
+}
+
+.left_info_handler{
+    text-align: right;
+    /* background-color:brown; */
+    padding-right: 10px;
+}
+
+.right_info_handler{
+    text-align: left;
+    /* background-color: burlywood; */
+    padding-left: 5px;
+}
+
+.main_name{
+    text-align: center;
+    font-size: 30px;
+    background-color: rgb(255, 223, 162);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+

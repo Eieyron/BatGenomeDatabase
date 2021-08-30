@@ -1,0 +1,31 @@
+.strain_content_body{
+    width: 100%;
+    height: 100%;
+}
+
+.section{
+    width: 100%;
+    height: 30px;
+    align-items: justify;
+    padding: 10px 0px 0px 40px;
+    background-color: rgb(209, 209, 209);
+}
+
+.name{
+    font-size: 40px;
+    padding: 10px 0px 10px 30px;
+}
+
+ul{
+    list-style-type: none;
+    padding-inline-start: 0%;
+}
+
+.information{
+    padding-left: 5vw;
+    font-size: 15px;
+}
+
+.section_contents{
+    text-decoration: none;
+}

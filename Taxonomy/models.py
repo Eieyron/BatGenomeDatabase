@@ -16,12 +16,12 @@ class Domain(models.Model):
     # taxonomic details
     proposed_as = models.CharField(max_length = 1024)
     publication = models.CharField(max_length = 1024)
-    publication_status = models.CharField(max_length = 150, null=True)
-    IJSEM_list = models.CharField(max_length = 150, null=True)
-    notes = models.CharField(max_length = 150, null=True)
-    reference_list = models.JSONField(null=True)
-    nomenclature_status = models.CharField(max_length = 150, null=True)
-    taxonomic_status = models.CharField(max_length = 150, null=True)
+    publication_status = models.CharField(max_length = 1024, default="none")
+    IJSEM_list = models.CharField(max_length = 1024, default="none")
+    notes = models.CharField(max_length = 1024, default="none")
+    reference_list = models.JSONField()
+    nomenclature_status = models.CharField(max_length = 1024, default="none")
+    taxonomic_status = models.CharField(max_length = 1024, default="none")
     
     def __str__(self):
         return self.scientific_name

@@ -36,17 +36,15 @@ class PhylumViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
-
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
         serializer = self.get_serializer(queryset, many=True)
 
         # print(serializer.data)
+        toReturn = serializer.data
 
-        return Response(serializer.data)
+        for item in toReturn:
+            item['parent'] = Domain.objects.get(pk=item['parent']).name
+
+        return Response(toReturn)
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -71,6 +69,18 @@ class ClassViewSet(viewsets.ModelViewSet):
 
     filter_backends = [DjangoFilterBackend]
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+
+        # print(serializer.data)
+        toReturn = serializer.data
+
+        for item in toReturn:
+            item['parent'] = Phylum.objects.get(pk=item['parent']).name
+
+        return Response(toReturn)
+
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
@@ -93,6 +103,18 @@ class OrderViewSet(viewsets.ModelViewSet):
     parser_classes = [MultiPartParser, FormParser]
 
     filter_backends = [DjangoFilterBackend]
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+
+        # print(serializer.data)
+        toReturn = serializer.data
+
+        for item in toReturn:
+            item['parent'] = Class.objects.get(pk=item['parent']).name
+
+        return Response(toReturn)
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -117,6 +139,18 @@ class FamilyViewSet(viewsets.ModelViewSet):
 
     filter_backends = [DjangoFilterBackend]
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+
+        # print(serializer.data)
+        toReturn = serializer.data
+
+        for item in toReturn:
+            item['parent'] = Order.objects.get(pk=item['parent']).name
+
+        return Response(toReturn)
+
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
@@ -140,6 +174,18 @@ class GenusViewSet(viewsets.ModelViewSet):
 
     filter_backends = [DjangoFilterBackend]
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+
+        # print(serializer.data)
+        toReturn = serializer.data
+
+        for item in toReturn:
+            item['parent'] = Family.objects.get(pk=item['parent']).name
+
+        return Response(toReturn)
+
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
@@ -162,6 +208,18 @@ class SpeciesViewSet(viewsets.ModelViewSet):
     parser_classes = [MultiPartParser, FormParser]
 
     filter_backends = [DjangoFilterBackend]
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+
+        # print(serializer.data)
+        toReturn = serializer.data
+
+        for item in toReturn:
+            item['parent'] = Genus.objects.get(pk=item['parent']).name
+
+        return Response(toReturn)
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
