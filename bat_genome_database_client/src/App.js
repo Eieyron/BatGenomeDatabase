@@ -9,6 +9,8 @@ import Taxonomy from "./pages/taxonomy/Taxonomy";
 import { Route, BrowserRouter as Router, Switch} from 'react-router-dom';
 import Topbar from "./components/topbar/Topbar";
 import Sidebar from "./components/sidebar/Sidebar";
+import About from "./pages/about/About";
+import Login from "./pages/login/Login";
 
 // import './App.css'
 
@@ -16,28 +18,24 @@ function App() {
   return (
     <div className="App">
 
-      {/* <button> tog </button> */}
+      <Router>
 
-      <Topbar />
-      <Sidebar />
+        <Topbar />
+        <Sidebar />
 
-      <div>
-
-
-        <Router>
-
-          <Switch>
-    
-            {/* <Route path="/domain" component={Domain} /> */}
-            <Route path="/tax" component={Taxonomy} />
-            <Route path="/strain" component={Strain} />
-            <Route path="/" component={Home} />
-    
-          </Switch>
-        </Router>
-      </div>
-
+        <Switch>
+  
+          {/* <Route path="/domain" component={Domain} /> */}
+          <Route path="/taxonomy" component={Taxonomy} />
+          <Route path="/about" component={About} />
+          <Route path="/strain" component={Strain} />
+          <Route path="/login" component={Login} />
+          <Route path="/" component={Home} />
+  
+        </Switch>
+      </Router>
     </div>
+
   );
 }
 

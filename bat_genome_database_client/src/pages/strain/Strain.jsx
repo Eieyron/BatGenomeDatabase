@@ -5,7 +5,7 @@ import './Strain.css'
 export default function Strain() {
     return (
         <div className="strain_content">
-            <div className="title">Strain Database</div>
+            <h1 className="title">Strain Database</h1>
             <StrainContent />
         </div>
     )
