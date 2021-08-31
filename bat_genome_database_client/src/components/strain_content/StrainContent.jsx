@@ -1,91 +1,102 @@
 // import React from 'react'
-import './StrainContent.css'
+import "./StrainContent.css";
 
-
-import React, { Component } from 'react'
-import { Button } from '@material-ui/core'
-
-
-// const axios = require('axios').default;
+import React, { Component } from "react";
 
 export default class StrainContent extends Component {
+  constructor(props) {
+    super(props);
 
-    constructor(props){
-        super(props);
-        this.state = {
-            items: [
-                {
-                    'name':"error",
-                }
-            ],
-            isLoaded: false,
-        }
-    }
+    console.log("straincontent");
+    console.log(this.props.id);
 
-    componentDidMount(){
+    this.state = {
+      content: {
+        name: "error",
+      },
+      isLoaded: false,
+    };
+  }
 
-        fetch('http://127.0.0.1:8000/strain/')
-            .then(res => res.json())
-            .then(json => {
-                this.setState({
-                    isLoaded: true,
-                    items: json,
-                })
-            })
+  componentDidMount() {
+    fetch("http://127.0.0.1:8000/strain/".concat(this.props.id).concat("/"))
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({
+          isLoaded: true,
+          content: json,
+        });
+      });
+  }
 
-    }
+  render() {
+    return (
+      <div className="strain_content_body">
+        <div className="name">{this.state.content.name}</div>
+        <div className="section">Name and Taxonomic Classification</div>
 
-    render() {
-        return (
-            <div className="strain_content_body">
+        <ul className="section_contents">
+          <li className="information">
+            <b>Scientific Name</b> &emsp;
+            <i>{this.state.content.scientific_name}</i>
+          </li>
+          {/* <li className="information">
+            <b>Domain</b> &emsp;<i>{this.state.content.domain}</i>
+          </li>
+          <li className="information">
+            <b>Phylum</b> &emsp;<i>{this.state.content.phylum}</i>
+          </li>
+          <li className="information">
+            <b>Class</b> &emsp;<i>{this.state.content.class_name}</i>
+          </li>
+          <li className="information">
+            <b>Order</b> &emsp;<i>{this.state.content.order}</i>
+          </li>
+          <li className="information">
+            <b>Family</b> &emsp;<i>{this.state.content.family}</i>
+          </li>
+          <li className="information">
+            <b>Genus</b> &emsp;<i>{this.state.content.genus}</i>
+          </li>
+          <li className="information">
+            <b>Species</b> &emsp;<i>{this.state.content.species}</i>
+          </li> */}
+        </ul>
 
-                {
-                    this.state.items.map(strain => (
+        <div className="section">Culture and Growth Conditions</div>
 
-                        <div key={strain.id}>
+        <ul className="section_contents">
+          <li className="information">
+            <b>Medium</b> &emsp;<i>{this.state.content.medium}</i>
+          </li>
+          <li className="information">
+            <b>Medium Composition</b> &emsp;
+            <i>{this.state.content.medium_composition}</i>
+          </li>
+          <li className="information">
+            <b>Medium Growth</b> &emsp;<i>{this.state.content.medium_growth}</i>
+          </li>
+          <li className="information">
+            <b>Temperature</b> &emsp;<i>{this.state.content.temperature}</i>
+          </li>
+          <li className="information">
+            <b>Temperature Range</b> &emsp;
+            <i>{this.state.content.temperature_range}</i>
+          </li>
+          <li className="information">
+            <b>Temperature Type</b> &emsp;
+            <i>{this.state.content.temperature_type}</i>
+          </li>
+        </ul>
 
-                            {console.log(strain)}
+        <div className="section">Sequence Information</div>
 
-                            <div className="name">{strain.name}</div>
-                            <div className="section">Name and Taxonomic Classification</div>
-                
-                                <ul className="section_contents">
-                                <li className="information"><b>Scientific Name</b> &emsp;<i>{strain.scientific_name}</i></li>
-                                <li className="information"><b>Domain</b> &emsp;<i>{strain.domain}</i></li>
-                                <li className="information"><b>Phylum</b> &emsp;<i>{strain.phylum}</i></li>
-                                <li className="information"><b>Class</b> &emsp;<i>{strain.class_name}</i></li>
-                                <li className="information"><b>Order</b> &emsp;<i>{strain.order}</i></li>
-                                <li className="information"><b>Family</b> &emsp;<i>{strain.family}</i></li>
-                                <li className="information"><b>Genus</b> &emsp;<i>{strain.genus}</i></li>
-                                <li className="information"><b>Species</b> &emsp;<i>{strain.species}</i></li>
-                                </ul>
-                
-
-                            <div className="section">Culture and Growth Conditions</div>
-
-                                <ul className="section_contents">
-                                    <li className="information"><b>Medium</b> &emsp;<i>{strain.medium}</i></li>
-                                    <li className="information"><b>Medium Composition</b> &emsp;<i>{strain.medium_composition}</i></li>
-                                    <li className="information"><b>Medium Growth</b> &emsp;<i>{strain.medium_growth}</i></li>
-                                    <li className="information"><b>Temperature</b> &emsp;<i>{strain.temperature}</i></li>
-                                    <li className="information"><b>Temperature Range</b> &emsp;<i>{strain.temperature_range}</i></li>
-                                    <li className="information"><b>Temperature Type</b> &emsp;<i>{strain.temperature_type}</i></li>
-                                </ul>
-                
-
-                            <div className="section">Sequence Information</div>
-
-                                <ul className="section_contents">
-                                    <Button variant="contained"><a href={strain.type_strain}>Get Fasta</a></Button>
-                                </ul>
-
-
-                        </div>
-                    ))
-                }
-                
-            </div>
-        )
-    }
+        <ul className="section_contents">
+          <button>
+            <a href={this.state.content.type_strain}>Get Fasta</a>
+          </button>
+        </ul>
+      </div>
+    );
+  }
 }
-

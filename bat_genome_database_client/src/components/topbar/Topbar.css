@@ -1,44 +1,45 @@
-.topBar{
-    width: 100%;
-    height: 100px;
-    background-color: rgb(255, 249, 227);
+.topBar {
+  width: 100%;
+  height: 100px;
+  background-color: rgb(255, 249, 227);
+  box-shadow: 10px;
 }
 
-.topBarWrapper{
-    height: 100%;
-    padding: 0px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.topBarWrapper {
+  height: 100%;
+  padding: 0px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.topRight{
-    display: flex;
-    align-items: center;
+.topRight {
+  display: flex;
+  align-items: center;
 }
 
-.topBarButton{
-    margin-right: 10px;
-    font-size: 20px;
+.topBarButton {
+  margin-right: 10px;
+  font-size: 20px;
 }
 
-.topBarOption{
-    color: black;
-    text-decoration: none;
+.topBarOption {
+  color: black;
+  text-decoration: none;
+  margin-right: 10px;
 }
 
-
-.pages{
-    display: flex;
-    align-items: center;
-    list-style-type: none;
+.pages {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
 }
 
-.logo{
-    /* font-weight: bold ;  */
-    /* font-size: 35px ; */
-    color: darkgoldenrod;
-    cursor: pointer;
-    text-decoration: none;
-    margin-left: 20px;
+.logo {
+  /* font-weight: bold ;  */
+  /* font-size: 35px ; */
+  color: darkgoldenrod;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 20px;
 }

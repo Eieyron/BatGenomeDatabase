@@ -1,31 +1,63 @@
-.strain_content_body{
-    width: 100%;
-    height: 100%;
+.strain_content_body {
+  width: 100%;
+  height: 100%;
 }
 
-.section{
-    width: 100%;
-    height: 30px;
-    align-items: justify;
-    padding: 10px 0px 0px 40px;
-    background-color: rgb(209, 209, 209);
+.section {
+  width: 100%;
+  height: 30px;
+  align-items: justify;
+  padding: 10px 0px 0px 40px;
+  background-color: rgb(209, 209, 209);
 }
 
-.name{
-    font-size: 40px;
-    padding: 10px 0px 10px 30px;
+.name {
+  font-size: 40px;
+  padding: 10px 0px 10px 30px;
 }
 
-ul{
-    list-style-type: none;
-    padding-inline-start: 0%;
+ul {
+  list-style-type: none;
+  padding-inline-start: 0%;
 }
 
-.information{
-    padding-left: 5vw;
-    font-size: 15px;
+.information {
+  padding-left: 5vw;
+  font-size: 15px;
 }
 
-.section_contents{
-    text-decoration: none;
+.section_contents {
+  text-decoration: none;
+  padding-left: 5vw;
+}
+
+.strainlist {
+  /* font-family: Arial, Helvetica, sans-serif; */
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.strainlist td,
+.strainlist th,
+.strainlist Link {
+  border: 1px solid #ddd;
+  padding: 8px;
+  align-items: center;
+  justify-items: center;
+}
+
+.strainlist tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.strainlist tr:hover {
+  background-color: #ddd;
+}
+
+.strainlist th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #272727;
+  color: white;
 }

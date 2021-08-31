@@ -1,18 +1,17 @@
 import React from "react";
-import StrainList from "../../components/strain_content/StrainList";
+import StrainContent from "../../components/strain_content/StrainContent";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./Strain.css";
 import { useParams } from "react-router-dom";
 
-export default function Strain(props) {
+export default function StrainDetail(props) {
   let { id } = useParams();
 
   return (
     <>
-      <Sidebar Crumb={props.Crumb} match={id} />
+      <Sidebar Crumb={props.Crumb} Match={id} />
       <div className="strain_content">
-        <h1 className="title">Strain Database</h1>
-        <StrainList />
+        <StrainContent id={id} />
       </div>
     </>
   );
