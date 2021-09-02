@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import Sidebar from "../sidebar/Sidebar";
+import history from "../../history";
 import "./TaxonomyHandler.css";
 
-class CategoryPicker extends Component {
+class CategoryPickerHandler extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,7 +13,7 @@ class CategoryPicker extends Component {
   }
 
   render() {
-    console.log(this.state.content);
+    // console.log(this.state.content);
 
     if (this.state.category === "Domain") {
       return (
@@ -244,7 +246,7 @@ class CategoryPicker extends Component {
   }
 }
 
-export default class DomainComponent extends Component {
+export default class CategoryList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -273,18 +275,39 @@ export default class DomainComponent extends Component {
   render() {
     return (
       <div>
-        {this.state.items.map((category) => (
-          <div className="domain" key={category.id}>
-            <div className="main_name">
-              {this.props.Category}
-              &nbsp;<i>{category.name}</i>
-            </div>
-
-            <div className="info_handler">
-              <CategoryPicker ToPresent={this.props.Category} Tax={category} />
-            </div>
-          </div>
-        ))}
+        <Sidebar Crumb={this.props.Crumb} />
+        <div className="main_name">{this.props.Category} Database</div>
+        <div className="domain">
+          <table className="strainlist">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Scientific Name</th>
+            </tr>
+            <tbody>
+              {this.state.items.map((category, category_id) => {
+                return (
+                  <tr
+                    key={category_id}
+                    onClick={() =>
+                      history.push(
+                        "/taxonomy/"
+                          .concat(this.props.Category.toLowerCase())
+                          .concat("/")
+                          .concat(category.id)
+                      )
+                    }
+                  >
+                    <td>{category.id}</td>
+                    <td>{category.name}</td>
+                    <td>{category.scientific_name}</td>
+                  </tr>
+                  // </Link>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
