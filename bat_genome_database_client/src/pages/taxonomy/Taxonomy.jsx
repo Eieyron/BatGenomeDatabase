@@ -1,15 +1,19 @@
-import React from "react";
-import "./Taxonomy.css";
-import TaxonomyHandler from "../../components/taxonomy_handler/TaxonomyHandler";
+import React, { Component } from "react";
+import { withRouter } from "react-router";
 import Sidebar from "../../components/sidebar/Sidebar";
+import TaxonomyHandler from "../../components/taxonomy_handler/TaxonomyHandler";
 
-export default function Taxonomy(props) {
-  return (
-    <>
-      <Sidebar Crumb={props.Crumb} />
-      <div className="taxonomy">
-        <TaxonomyHandler />
+export class Taxonomy extends Component {
+  render() {
+    return (
+      <div>
+        <Sidebar Crumb={this.props.Crumb} Match={this.props.match} />
+        <div className="taxonomy">
+          <TaxonomyHandler />
+        </div>
       </div>
-    </>
-  );
+    );
+  }
 }
+
+export default withRouter(Taxonomy);

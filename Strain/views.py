@@ -6,12 +6,17 @@ from rest_framework.parsers import FormParser, MultiPartParser
 from .models import Strain
 from Taxonomy.models import Domain, Phylum, Order, Class, Family, Genus, Species
 from Taxonomy.serializer import DomainSerializer, PhylumSerializer, OrderSerializer, ClassSerializer, FamilySerializer, GenusSerializer, SpeciesSerializer
+import json
+
+class Prototype:
+
+    pass
 
 class StrainViewSet(viewsets.ModelViewSet):
     
     queryset = Strain.objects.all()
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
+        permissions.AllowAny
     ]
 
     serializer_class = StrainSerializer
@@ -58,3 +63,14 @@ class StrainViewSet(viewsets.ModelViewSet):
         # print(data)
 
         return Response(data)
+
+    def create(self, request, *args, **kwargs):
+
+        # this implementation is trashy; this needs to be changed either in the frontend or in the backend side. 
+
+        new_request = Prototype()
+        new_request.data = json.loads(list(request.data.keys())[0])
+        to_return = super().create(new_request, args, kwargs)
+
+
+        return to_return

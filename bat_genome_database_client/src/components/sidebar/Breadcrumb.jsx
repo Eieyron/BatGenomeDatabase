@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Sidebar.css";
+import { withRouter } from "react-router";
 
 export class Breadcrumb extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      stringlist: this.props.Crumb.split("/").filter((value, index, arr) => {
-        return value !== "";
-      }),
+      stringlist: this.props.Match.url
+        .split("/")
+        .filter((value, index, arr) => {
+          return value !== "";
+        }),
     };
 
     this.update = this.update.bind(this);
@@ -29,19 +32,10 @@ export class Breadcrumb extends Component {
       to_return = to_return.concat(this.state.stringlist[i].concat("/"));
     }
 
-    // console.log(to_return);
     return to_return;
   }
 
   render() {
-    let values,
-      counter = 0;
-    if (this.props.Match) {
-      values = Object.keys(this.props.Match).map((key) => {
-        return this.props.Match[key];
-      });
-    }
-
     return (
       <div className="breadcrumb">
         {this.state.stringlist.map((string, string_id) => {
@@ -57,13 +51,11 @@ export class Breadcrumb extends Component {
             );
           } else {
             return (
-              <div key={string_id}>
+              <Link key={string_id} to={() => this.create_route(string_id)}>
                 /&nbsp;
-                <Link key={string_id} to={() => this.create_route(string_id)}>
-                  {string.charAt(0) === ":" ? values[counter++] : string}
-                </Link>
+                {string === ":id" ? this.props.Match.id : string}
                 &nbsp;
-              </div>
+              </Link>
             );
           }
         })}
@@ -72,4 +64,4 @@ export class Breadcrumb extends Component {
   }
 }
 
-export default Breadcrumb;
+export default withRouter(Breadcrumb);

@@ -93,6 +93,7 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = "BatGenomeDatabase.asgi.application"
 WSGI_APPLICATION = 'BatGenomeDatabase.wsgi.application'
 
 REST_FRAMEWORK = {

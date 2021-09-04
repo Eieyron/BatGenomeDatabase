@@ -1,18 +1,22 @@
-import React from "react";
+import React, { Component } from "react";
+import { withRouter } from "react-router";
 import Sidebar from "../../components/sidebar/Sidebar";
-import "./Taxonomy";
-import { useParams } from "react-router-dom";
 import CategoryContent from "../../components/taxonomy_handler/CategoryContent";
 
-export default function TaxonomyDetail(props) {
-  let match = useParams();
-
-  return (
-    <>
-      <Sidebar Crumb={props.Crumb} Match={match} />
-      <div className="strain_content">
-        <CategoryContent category={match.category} id={match.id} />
+export class TaxonomyDetail extends Component {
+  render() {
+    return (
+      <div>
+        <Sidebar Crumb={this.props.Crumb} Match={this.props.match} />
+        <div className="strain_content">
+          <CategoryContent
+            category={this.props.match.params.category}
+            id={this.props.match.params.id}
+          />
+        </div>
       </div>
-    </>
-  );
+    );
+  }
 }
+
+export default withRouter(TaxonomyDetail);

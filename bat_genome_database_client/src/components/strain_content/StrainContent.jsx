@@ -7,6 +7,8 @@ export default class StrainContent extends Component {
   constructor(props) {
     super(props);
 
+    console.log(this.props);
+
     this.state = {
       content: {
         name: "error",
@@ -41,7 +43,12 @@ export default class StrainContent extends Component {
               <i>{this.state.content.scientific_name}</i>
             </li>
             <li className="information">
-              <b>Domain</b> &emsp;<i>{this.state.content.domain.name}</i>
+              <b>Domain</b> &emsp;
+              <i>
+                {this.state.content.doman
+                  ? this.state.content.domain.name
+                  : null}
+              </i>
             </li>
             {/* <li className="information">
               <b>Phylum</b> &emsp;<i>{this.state.content.phylum.name}</i>

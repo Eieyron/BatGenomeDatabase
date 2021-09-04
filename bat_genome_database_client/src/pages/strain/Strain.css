@@ -23,3 +23,7 @@
 .title_bar_button:hover {
   fill: #ddd;
 }
+
+.form_layout {
+  display: list-item;
+}

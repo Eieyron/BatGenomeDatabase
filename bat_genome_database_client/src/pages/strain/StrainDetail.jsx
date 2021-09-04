@@ -1,18 +1,22 @@
-import React from "react";
-import StrainContent from "../../components/strain_content/StrainContent";
+import React, { Component } from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
-import "./Strain.css";
-import { useParams } from "react-router-dom";
+import StrainContent from "../../components/strain_content/StrainContent";
+import { withRouter } from "react-router";
 
-export default function StrainDetail(props) {
-  let match = useParams();
+export class StrainDetail extends Component {
+  render() {
+    console.log("in strain");
+    console.log(this.props.match);
 
-  return (
-    <>
-      <Sidebar Crumb={props.Crumb} Match={match} />
-      <div className="strain_content">
-        <StrainContent id={match.id} />
+    return (
+      <div>
+        <Sidebar Crumb={this.props.Crumb} Match={this.props.match} />
+        <div className="strain_content">
+          <StrainContent id={this.props.match.id} />
+        </div>
       </div>
-    </>
-  );
+    );
+  }
 }
+
+export default withRouter(StrainDetail);
