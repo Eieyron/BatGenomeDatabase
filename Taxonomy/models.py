@@ -9,7 +9,7 @@ class Domain(models.Model):
     class Meta:
         verbose_name_plural = "Domain"
 
-    name = models.CharField(max_length=256)
+    category_name = models.CharField(max_length=256)
     scientific_name = models.CharField(max_length=1024)
     etymology = models.CharField(max_length=1024)
 
@@ -19,7 +19,7 @@ class Domain(models.Model):
     publication_status = models.CharField(max_length = 1024, default="none")
     IJSEM_list = models.CharField(max_length = 1024, default="none")
     notes = models.CharField(max_length = 1024, default="none")
-    reference_list = models.JSONField()
+    reference_list = models.JSONField(null=True)
     nomenclature_status = models.CharField(max_length = 1024, default="none")
     taxonomic_status = models.CharField(max_length = 1024, default="none")
     
@@ -35,7 +35,7 @@ class Phylum(models.Model):
     class Meta:
         verbose_name_plural = "Phyla"
 
-    name = models.CharField(max_length=256)
+    category_name = models.CharField(max_length=256)
     scientific_name = models.CharField(max_length=1024)
     etymology = models.CharField(max_length=1024, null=True)
     emendation = models.CharField(max_length = 1024, null=True)
@@ -60,7 +60,7 @@ class Class(models.Model):
     class Meta:
         verbose_name_plural = "Classes"
 
-    name = models.CharField(max_length=256)
+    category_name = models.CharField(max_length=256)
     scientific_name = models.CharField(max_length=1024)
     etymology = models.CharField(max_length=1024)
     gender = models.CharField(max_length = 1024)
@@ -81,7 +81,7 @@ class Class(models.Model):
 
 class Order(models.Model):
 
-    name = models.CharField(max_length=256)
+    category_name = models.CharField(max_length=256)
     scientific_name = models.CharField(max_length=1024)
     etymology = models.CharField(max_length=1024)
     gender = models.CharField(max_length = 1024)
@@ -105,7 +105,7 @@ class Family(models.Model):
     class Meta:
         verbose_name_plural = "Families"
 
-    name = models.CharField(max_length=256)
+    category_name = models.CharField(max_length=256)
     scientific_name = models.CharField(max_length=1024)
     etymology = models.CharField(max_length=1024)
     gender = models.CharField(max_length = 1024)
@@ -127,7 +127,7 @@ class Family(models.Model):
 def get_upload_genus_path(instance, filename):
     return os.path.join(
         'genus_rna',
-        instance.name,
+        instance.category_name,
         filename
     )
 
@@ -136,7 +136,7 @@ class Genus(models.Model):
     class Meta:
         verbose_name_plural = "Genera"
 
-    name = models.CharField(max_length=256)
+    category_name = models.CharField(max_length=256)
     scientific_name = models.CharField(max_length=1024)
     etymology = models.CharField(max_length=1024, null=True)
     gender = models.CharField(max_length = 1024, null=True)
@@ -159,7 +159,7 @@ class Genus(models.Model):
 def get_upload_species_path(instance, filename):
     return os.path.join(
         'species_rna',
-        instance.name,
+        instance.category_name,
         filename
     )
 
@@ -168,7 +168,7 @@ class Species(models.Model):
     class Meta:
         verbose_name_plural = "Species"
 
-    name = models.CharField(max_length=256)
+    category_name = models.CharField(max_length=256)
     scientific_name = models.CharField(max_length=1024)
     basonym = models.CharField(max_length = 1024, null=True)
     etymology = models.CharField(max_length=256, null=True)

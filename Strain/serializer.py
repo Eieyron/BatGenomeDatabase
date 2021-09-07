@@ -5,13 +5,13 @@ from datetime import datetime
 
 class StrainSerializer(serializers.ModelSerializer):
 
-    species_only    = serializers.BooleanField(write_only=True)
+    species_only = serializers.BooleanField(write_only=True)
 
     class Meta:
         model = Strain
         fields = [
             'id',
-            'name',
+            'strain_name',
             'type_strain',
             'scientific_name',
             'medium',
@@ -38,7 +38,7 @@ class StrainSerializer(serializers.ModelSerializer):
         # to_return = super().create(validated_data)
 
         strain = Strain(
-            name = validated_data['name']
+            name = validated_data['strain_name']
         )
 
         species_only = validated_data['species_only']
@@ -127,10 +127,12 @@ class StrainSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
 
         for key, val in validated_data.items():
-            # print(key, val)
 
             if key == "type_strain" and val:
                 instance.type_strain.save(name=val.name, content=val.file)
+
+            elif key == "strain_name" and val:
+                instance.strain_name = val
 
             elif key == "scientific_name" and val:
                 instance.scientific_name = val

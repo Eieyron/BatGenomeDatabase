@@ -3,6 +3,7 @@ import Sidebar from "../sidebar/Sidebar";
 import history from "../../history";
 import "./TaxonomyHandler.css";
 import { withRouter } from "react-router-dom";
+import axios from "axios";
 
 export class CategoryList extends Component {
   constructor(props) {
@@ -57,7 +58,7 @@ export class CategoryList extends Component {
                     }
                   >
                     <td>{category.id}</td>
-                    <td>{category.name}</td>
+                    <td>{category.category_name}</td>
                     <td>{category.scientific_name}</td>
                   </tr>
                   // </Link>

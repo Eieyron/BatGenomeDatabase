@@ -12,8 +12,27 @@
 }
 
 .name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.name_left {
   font-size: 40px;
   padding: 10px 0px 10px 30px;
+}
+
+.name_right {
+  padding-right: 10px;
+}
+
+.name_button {
+  width: 40px;
+  height: 40px;
+}
+
+.name_button:hover {
+  fill: #ddd;
 }
 
 ul {
@@ -73,4 +92,16 @@ ul {
 
 .row_name:hover {
   background-color: #ddd;
+}
+
+.form_container {
+  display: inline-grid;
+  justify-content: center;
+  width: 100%;
+  /* background-color: orange; */
+}
+
+.form_content {
+  display: inline-grid;
+  padding-bottom: 10px;
 }

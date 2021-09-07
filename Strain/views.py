@@ -2,7 +2,7 @@ from rest_framework import viewsets, permissions, status
 from .serializer import StrainSerializer
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 from .models import Strain
 from Taxonomy.models import Domain, Phylum, Order, Class, Family, Genus, Species
 from Taxonomy.serializer import DomainSerializer, PhylumSerializer, OrderSerializer, ClassSerializer, FamilySerializer, GenusSerializer, SpeciesSerializer
@@ -21,7 +21,7 @@ class StrainViewSet(viewsets.ModelViewSet):
 
     serializer_class = StrainSerializer
 
-    parser_classes = [MultiPartParser, FormParser]
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
 
     filter_backends = [DjangoFilterBackend]
 
@@ -34,13 +34,13 @@ class StrainViewSet(viewsets.ModelViewSet):
         to_return = serializer.data
 
         for item in to_return:
-            item['domain'] = Domain.objects.get(pk=item['domain']).name
-            item['phylum'] = Phylum.objects.get(pk=item['phylum']).name
-            item['order'] = Order.objects.get(pk=item['order']).name
-            item['class_name'] = Class.objects.get(pk=item['class_name']).name
-            item['family'] = Family.objects.get(pk=item['family']).name
-            item['genus'] = Genus.objects.get(pk=item['genus']).name
-            item['species'] = Species.objects.get(pk=item['species']).name
+            item['domain'] = Domain.objects.get(pk=item['domain']).category_name
+            item['phylum'] = Phylum.objects.get(pk=item['phylum']).category_name
+            item['order'] = Order.objects.get(pk=item['order']).category_name
+            item['class_name'] = Class.objects.get(pk=item['class_name']).category_name
+            item['family'] = Family.objects.get(pk=item['family']).category_name
+            item['genus'] = Genus.objects.get(pk=item['genus']).category_name
+            item['species'] = Species.objects.get(pk=item['species']).category_name
 
 
         return Response(to_return)
@@ -64,13 +64,4 @@ class StrainViewSet(viewsets.ModelViewSet):
 
         return Response(data)
 
-    def create(self, request, *args, **kwargs):
 
-        # this implementation is trashy; this needs to be changed either in the frontend or in the backend side. 
-
-        new_request = Prototype()
-        new_request.data = json.loads(list(request.data.keys())[0])
-        to_return = super().create(new_request, args, kwargs)
-
-
-        return to_return

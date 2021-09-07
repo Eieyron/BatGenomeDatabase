@@ -277,7 +277,7 @@ export default class CategoryContent extends Component {
             <div className="main_name">
               {this.state.category}
               &nbsp;
-              <i>{this.state.content.name}</i>
+              <i>{this.state.content.category_name}</i>
             </div>
             <div className="info_handler">{this.renderElement()}</div>
           </div>

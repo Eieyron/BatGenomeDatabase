@@ -11,7 +11,7 @@ def get_strain_upload_path(instance, filename):
 
 class Strain(models.Model):
 
-    name = models.CharField(max_length=256)
+    strain_name = models.CharField(max_length=256)
     type_strain = models.FileField(upload_to=get_strain_upload_path, max_length = 100, null=True)
     scientific_name = models.CharField(max_length=1024, null=True)
     medium = models.CharField(max_length=1024, null=True)
@@ -33,5 +33,5 @@ class Strain(models.Model):
     
 
     def __str__(self):
-        return self.name
+        return self.strain_name
 

@@ -22,10 +22,6 @@ export class AddStrain extends Component {
 
     this.api = axios.create({
       baseURL: `http://localhost:8000/strain/`,
-      // headers: {
-      //   "Content-Type":
-      //     "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
-      // },
     });
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -37,8 +33,6 @@ export class AddStrain extends Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    console.log("value being addded");
-
     this.setState({
       [name]: value,
     });
@@ -48,33 +42,84 @@ export class AddStrain extends Component {
     event.preventDefault();
 
     await this.api
-      .post("/", JSON.stringify(this.state))
-      .then((response) => console.log(response))
+      .post("/", this.state)
+      .then((response) => {
+        alert(response.statusText + ": " + response.data.name);
+      })
       .then((data) => console.log(data))
       .catch((error) => console.log("Error detected: " + error));
   }
 
   render() {
     return (
-      <form onSubmit={this.submit}>
-        <label>
-          Name:
+      <form onSubmit={this.submit} className="form_container">
+        <div className="form_content">
+          Name
           <input
             name="name"
             type="text"
             value={this.state.value}
             onChange={this.handleInputChange}
           />
-        </label>
-        <label>
-          Scientific Name:
+        </div>
+        <div className="form_content">
+          Scientific Name
           <input
             name="scientific_name"
             type="text"
             value={this.state.value}
             onChange={this.handleInputChange}
           />
-        </label>
+        </div>
+        <div className="form_content">
+          Medium
+          <input
+            name="medium"
+            type="text"
+            value={this.state.value}
+            onChange={this.handleInputChange}
+          />
+        </div>
+        <div className="form_content">medium growth</div>
+        <div className="form_content">
+          Medium Composition
+          <input
+            name="medium_composition"
+            type="text"
+            value={this.state.value}
+            onChange={this.handleInputChange}
+          />
+        </div>
+        <div className="form_content">
+          Temperature
+          <input
+            name="temperature"
+            type="number"
+            value={this.state.value}
+            onChange={this.handleInputChange}
+          />
+        </div>
+        <div className="form_content">
+          Temperature Type
+          <input
+            name="temperature_type"
+            type="text"
+            value={this.state.value}
+            onChange={this.handleInputChange}
+          />
+        </div>
+        <div className="form_content">
+          Temperature Range
+          <input
+            name="temperature_range"
+            type="text"
+            value={this.state.value}
+            onChange={this.handleInputChange}
+          />
+        </div>
+        <div className="form_content">reference_list</div>
+        <div className="form_content">species_only</div>
+        <div className="form_content">species_id</div>
         <input type="submit" value="Submit" />
       </form>
     );
