@@ -6,7 +6,7 @@ from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 from .models import Strain
 from Taxonomy.models import Domain, Phylum, Order, Class, Family, Genus, Species
 from Taxonomy.serializer import DomainSerializer, PhylumSerializer, OrderSerializer, ClassSerializer, FamilySerializer, GenusSerializer, SpeciesSerializer
-import json
+import json, base64
 
 class Prototype:
 
@@ -24,6 +24,7 @@ class StrainViewSet(viewsets.ModelViewSet):
     parser_classes = [JSONParser, MultiPartParser, FormParser]
 
     filter_backends = [DjangoFilterBackend]
+
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())

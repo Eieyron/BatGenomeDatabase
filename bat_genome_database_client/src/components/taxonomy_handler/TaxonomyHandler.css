@@ -66,10 +66,29 @@
   padding-left: 5px;
 }
 
-.main_name {
+.row_name:hover {
+  fill: #ddd;
+}
+
+.content_name {
   text-align: center;
   font-size: 30px;
-  background-color: rgb(255, 223, 162);
   padding-top: 10px;
   padding-bottom: 10px;
+  background-color: rgb(255, 223, 162);
+}
+
+.main_name {
+  display: flex;
+  background-color: rgb(255, 223, 162);
+  align-items: center;
+  justify-content: center;
+}
+
+.main_name_center {
+  text-align: center;
+  font-size: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 95%;
 }

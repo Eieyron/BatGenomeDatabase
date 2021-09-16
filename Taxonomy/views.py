@@ -3,7 +3,7 @@ from rest_framework import viewsets, permissions, status
 from .serializer import DomainSerializer, PhylumSerializer, ClassSerializer, OrderSerializer, FamilySerializer, GenusSerializer, SpeciesSerializer
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.parsers import FormParser, MultiPartParser,JSONParser
 
 
 # Create your views here.
@@ -12,12 +12,13 @@ class DomainViewSet(viewsets.ModelViewSet):
     
     queryset = Domain.objects.all()
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
+        # permissions.IsAuthenticatedOrReadOnly
+        permissions.AllowAny
     ]
 
     serializer_class = DomainSerializer
 
-    parser_classes = [MultiPartParser, FormParser]
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
 
     filter_backends = [DjangoFilterBackend]
 
@@ -25,12 +26,13 @@ class PhylumViewSet(viewsets.ModelViewSet):
     
     queryset = Phylum.objects.all()
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
+        # permissions.IsAuthenticatedOrReadOnly
+        permissions.AllowAny
     ]
 
     serializer_class = PhylumSerializer
 
-    parser_classes = [MultiPartParser, FormParser]
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
 
     filter_backends = [DjangoFilterBackend]
 
@@ -42,7 +44,7 @@ class PhylumViewSet(viewsets.ModelViewSet):
         toReturn = serializer.data
 
         for item in toReturn:
-            item['parent'] = Domain.objects.get(pk=item['parent']).name
+            item['parent'] = Domain.objects.get(pk=item['parent']).category_name
 
         return Response(toReturn)
 
@@ -60,12 +62,13 @@ class ClassViewSet(viewsets.ModelViewSet):
     
     queryset = Class.objects.all()
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
+        # permissions.IsAuthenticatedOrReadOnly
+        permissions.AllowAny
     ]
 
     serializer_class = ClassSerializer
 
-    parser_classes = [MultiPartParser, FormParser]
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
 
     filter_backends = [DjangoFilterBackend]
 
@@ -77,7 +80,7 @@ class ClassViewSet(viewsets.ModelViewSet):
         toReturn = serializer.data
 
         for item in toReturn:
-            item['parent'] = Phylum.objects.get(pk=item['parent']).name
+            item['parent'] = Phylum.objects.get(pk=item['parent']).category_name
 
         return Response(toReturn)
 
@@ -95,12 +98,13 @@ class OrderViewSet(viewsets.ModelViewSet):
     
     queryset = Order.objects.all()
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
+        # permissions.IsAuthenticatedOrReadOnly
+        permissions.AllowAny
     ]
 
     serializer_class = OrderSerializer
 
-    parser_classes = [MultiPartParser, FormParser]
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
 
     filter_backends = [DjangoFilterBackend]
 
@@ -112,7 +116,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         toReturn = serializer.data
 
         for item in toReturn:
-            item['parent'] = Class.objects.get(pk=item['parent']).name
+            item['parent'] = Class.objects.get(pk=item['parent']).category_name
 
         return Response(toReturn)
 
@@ -130,12 +134,13 @@ class FamilyViewSet(viewsets.ModelViewSet):
     
     queryset = Family.objects.all()
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
+        # permissions.IsAuthenticatedOrReadOnly
+        permissions.AllowAny
     ]
 
     serializer_class = FamilySerializer
 
-    parser_classes = [MultiPartParser, FormParser]
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
 
     filter_backends = [DjangoFilterBackend]
 
@@ -147,7 +152,7 @@ class FamilyViewSet(viewsets.ModelViewSet):
         toReturn = serializer.data
 
         for item in toReturn:
-            item['parent'] = Order.objects.get(pk=item['parent']).name
+            item['parent'] = Order.objects.get(pk=item['parent']).category_name
 
         return Response(toReturn)
 
@@ -165,14 +170,22 @@ class GenusViewSet(viewsets.ModelViewSet):
     
     queryset = Genus.objects.all()
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
+        # permissions.IsAuthenticatedOrReadOnly
+        permissions.AllowAny
     ]
 
     serializer_class = GenusSerializer
 
-    parser_classes = [MultiPartParser, FormParser]
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
 
     filter_backends = [DjangoFilterBackend]
+
+    def create(self, request, *args, **kwargs):
+
+        print("request_data_genus", request.data)
+
+        return super().create(request, args, kwargs)
+
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -182,7 +195,7 @@ class GenusViewSet(viewsets.ModelViewSet):
         toReturn = serializer.data
 
         for item in toReturn:
-            item['parent'] = Family.objects.get(pk=item['parent']).name
+            item['parent'] = Family.objects.get(pk=item['parent']).category_name
 
         return Response(toReturn)
 
@@ -200,12 +213,13 @@ class SpeciesViewSet(viewsets.ModelViewSet):
     
     queryset = Species.objects.all()
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
+        # permissions.IsAuthenticatedOrReadOnly
+        permissions.AllowAny
     ]
 
     serializer_class = SpeciesSerializer
 
-    parser_classes = [MultiPartParser, FormParser]
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
 
     filter_backends = [DjangoFilterBackend]
 
@@ -217,7 +231,7 @@ class SpeciesViewSet(viewsets.ModelViewSet):
         toReturn = serializer.data
 
         for item in toReturn:
-            item['parent'] = Genus.objects.get(pk=item['parent']).name
+            item['parent'] = Genus.objects.get(pk=item['parent']).category_name
 
         return Response(toReturn)
 

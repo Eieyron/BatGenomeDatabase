@@ -48,7 +48,7 @@ export default class StrainList extends Component {
       .then((data) => console.log(data))
       .catch((error) => console.log("Error detected: " + error));
 
-    // window.location.reload();
+    window.location.reload();
   }
 
   render() {

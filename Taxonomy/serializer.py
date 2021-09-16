@@ -134,15 +134,13 @@ class GenusSerializer(serializers.ModelSerializer):
                 print(val.id)
                 parent_id = val.id
 
-        # print("domain",Domain.objects.get(id=parent_id) )
-
         parent_relationship = Family_Child(
-            Family_parent = Family.objects.get(id=parent_id) ,
+            family_parent = Family.objects.get(id=parent_id) ,
             genus_child = to_return
         )
 
         parent_relationship.save()
-        
+
         return to_return
 
 class SpeciesSerializer(serializers.ModelSerializer):
@@ -171,3 +169,4 @@ class SpeciesSerializer(serializers.ModelSerializer):
         parent_relationship.save()
         
         return to_return
+    

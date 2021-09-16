@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Strain
 from Taxonomy.models import Species, Species_Child
 from datetime import datetime
+import base64
 
 class StrainSerializer(serializers.ModelSerializer):
 
@@ -33,12 +34,22 @@ class StrainSerializer(serializers.ModelSerializer):
             'species',
         ]
 
+    # def validate_type_strain(self, value):
+
+    #     print("is this even getting validated")
+
+    #     toReturn = base64.decodebytes(value)
+    #     print(toReturn.__dict__)
+
+    #     return value
+
     def create(self, validated_data):
 
         # to_return = super().create(validated_data)
+        print("this is being invoked")
 
         strain = Strain(
-            name = validated_data['strain_name']
+            strain_name = validated_data['strain_name']
         )
 
         species_only = validated_data['species_only']

@@ -1,6 +1,6 @@
 // import React from 'react'
 import "./StrainContent.css";
-
+import ParentList from "../taxonomy_handler/ParentList";
 import React, { Component } from "react";
 import axios from "axios";
 
@@ -18,7 +18,9 @@ export default class StrainContent extends Component {
       component: "content",
     };
 
-    this.toEdit = {};
+    this.toEdit = {
+      species_only: true,
+    };
 
     this.showContents = this.showContents.bind(this);
     this.editContent = this.editContent.bind(this);
@@ -120,7 +122,11 @@ export default class StrainContent extends Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    this.toEdit[name] = value;
+    if (target.type === "file") {
+      this.toEdit[name] = target.files[0];
+    } else {
+      this.toEdit[name] = value;
+    }
 
     console.log(this.toEdit);
   }
@@ -128,16 +134,25 @@ export default class StrainContent extends Component {
   async update(event) {
     event.preventDefault();
 
+    let fd = new FormData();
+    for (const [key, value] of Object.entries(this.toEdit)) {
+      console.log(key, value);
+      fd.append(key, value);
+    }
+
+    console.log("formdata", fd);
+
     await axios
-      .patch("http://localhost:8000/strain/" + this.props.id + "/", this.toEdit)
+      .patch("http://localhost:8000/strain/" + this.props.id + "/", fd)
       .then((response) => {
-        alert(response.statusText + ": " + response.data.name);
+        alert(response.statusText + ": " + response.data.strain_name);
         console.log(response);
       })
       .then((data) => console.log(data))
       .catch((error) => console.log("Error detected: " + error));
 
     this.componentDidMount();
+    // window.location.reload();
   }
 
   editContent() {
@@ -148,7 +163,6 @@ export default class StrainContent extends Component {
           <input
             name="strain_name"
             type="text"
-            value={this.state.value}
             onChange={this.handleInputChange}
           />
         </div>
@@ -157,26 +171,26 @@ export default class StrainContent extends Component {
           <input
             name="scientific_name"
             type="text"
-            value={this.state.value}
             onChange={this.handleInputChange}
           />
         </div>
         <div className="form_content">
           Medium
+          <input name="medium" type="text" onChange={this.handleInputChange} />
+        </div>
+        <div className="form_content">
+          Medium growth
           <input
-            name="medium"
-            type="text"
-            value={this.state.value}
+            name="medium_growth"
+            type="checkbox"
             onChange={this.handleInputChange}
           />
         </div>
-        <div className="form_content">medium growth</div>
         <div className="form_content">
           Medium Composition
           <input
             name="medium_composition"
             type="text"
-            value={this.state.value}
             onChange={this.handleInputChange}
           />
         </div>
@@ -185,7 +199,6 @@ export default class StrainContent extends Component {
           <input
             name="temperature"
             type="number"
-            value={this.state.value}
             onChange={this.handleInputChange}
           />
         </div>
@@ -194,7 +207,6 @@ export default class StrainContent extends Component {
           <input
             name="temperature_type"
             type="text"
-            value={this.state.value}
             onChange={this.handleInputChange}
           />
         </div>
@@ -203,71 +215,101 @@ export default class StrainContent extends Component {
           <input
             name="temperature_range"
             type="text"
-            value={this.state.value}
-            onChange={this.handleInputChange}
-          />
-        </div>
-        <div className="form_content">reference_list</div>
-        <div className="form_content">
-          Domain ID{" "}
-          <input
-            name="temperature_range"
-            type="number"
-            value={this.state.value}
             onChange={this.handleInputChange}
           />
         </div>
         <div className="form_content">
-          Phylum ID{" "}
-          <input
-            name="temperature_range"
-            type="number"
-            value={this.state.value}
+          Reference List
+          <textarea
+            name="reference_list"
             onChange={this.handleInputChange}
+            rows="4"
+            cols="50"
           />
         </div>
         <div className="form_content">
-          Class ID{" "}
+          Species Only
           <input
-            name="temperature_range"
-            type="number"
-            value={this.state.value}
+            name="species_only"
+            type="checkbox"
+            checked={this.toEdit.species_only}
             onChange={this.handleInputChange}
           />
         </div>
+        {this.toEdit.species_only ? (
+          <div className="form_content">
+            <ParentList
+              name="species"
+              category="strain"
+              onChange={this.handleInputChange}
+              category_contents={["Species"]}
+            />
+          </div>
+        ) : (
+          <>
+            <div className="form_content">
+              <ParentList
+                name="domain"
+                category="phylum"
+                onChange={this.handleInputChange}
+                category_contents={["Domain"]}
+              />
+            </div>
+            <div className="form_content">
+              <ParentList
+                name="phylum"
+                category="class"
+                onChange={this.handleInputChange}
+                category_contents={["Phylum"]}
+              />
+            </div>
+            <div className="form_content">
+              <ParentList
+                name="class"
+                category="order"
+                onChange={this.handleInputChange}
+                category_contents={["Class"]}
+              />
+            </div>
+            <div className="form_content">
+              <ParentList
+                name="order"
+                category="family"
+                onChange={this.handleInputChange}
+                category_contents={["Order"]}
+              />
+            </div>
+            <div className="form_content">
+              <ParentList
+                name="family"
+                category="genus"
+                onChange={this.handleInputChange}
+                category_contents={["Family"]}
+              />
+            </div>
+            <div className="form_content">
+              <ParentList
+                name="genus"
+                category="species"
+                onChange={this.handleInputChange}
+                category_contents={["Genus"]}
+              />
+            </div>
+            <div className="form_content">
+              <ParentList
+                name="species"
+                category="strain"
+                onChange={this.handleInputChange}
+                category_contents={["Species"]}
+              />
+            </div>
+          </>
+        )}
         <div className="form_content">
-          Order ID{" "}
+          Type Strain(file)
           <input
-            name="temperature_range"
-            type="number"
-            value={this.state.value}
-            onChange={this.handleInputChange}
-          />
-        </div>
-        <div className="form_content">
-          Family ID{" "}
-          <input
-            name="temperature_range"
-            type="number"
-            value={this.state.value}
-            onChange={this.handleInputChange}
-          />
-        </div>
-        <div className="form_content">
-          Genus ID{" "}
-          <input
-            name="temperature_range"
-            type="number"
-            value={this.state.value}
-            onChange={this.handleInputChange}
-          />
-        </div>
-        <div className="form_content">
-          Species ID{" "}
-          <input
-            name="temperature_range"
-            type="number"
-            value={this.state.value}
+            name="type_strain"
+            type="file"
             onChange={this.handleInputChange}
           />
         </div>

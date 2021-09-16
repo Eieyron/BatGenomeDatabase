@@ -5,7 +5,7 @@ import os
 def get_strain_upload_path(instance, filename):
     return os.path.join(
         'strain_rna',
-        instance.name,
+        instance.strain_name,
         filename
     )
 
