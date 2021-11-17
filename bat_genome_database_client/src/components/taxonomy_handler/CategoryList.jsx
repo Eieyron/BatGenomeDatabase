@@ -29,7 +29,7 @@ export class CategoryList extends Component {
 
   componentDidMount() {
     fetch(
-      "http://127.0.0.1:8000/tax/" + this.props.Category.toLowerCase() + "/"
+      axios.defaults.baseURL + "tax/" + this.props.Category.toLowerCase() + "/"
     )
       .then((res) => res.json())
       .then((json) => {

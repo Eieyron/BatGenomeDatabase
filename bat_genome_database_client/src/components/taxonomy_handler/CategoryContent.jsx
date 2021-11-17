@@ -30,7 +30,8 @@ export default class CategoryContent extends Component {
 
   componentDidMount() {
     fetch(
-      "http://127.0.0.1:8000/tax/" +
+      axios.defaults.baseURL +
+        "tax/" +
         this.props.category.toLowerCase() +
         "/" +
         this.props.id +
@@ -124,14 +125,7 @@ export default class CategoryContent extends Component {
     console.log("formdata", fd);
 
     await axios
-      .patch(
-        "http://127.0.0.1:8000/tax/" +
-          this.props.category +
-          "/" +
-          this.props.id +
-          "/",
-        fd
-      )
+      .patch("tax/" + this.props.category + "/" + this.props.id + "/", fd)
       .then((response) => {
         alert(response.statusText + ": " + response.data.strain_name);
         console.log(response);

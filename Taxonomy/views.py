@@ -12,8 +12,8 @@ class DomainViewSet(viewsets.ModelViewSet):
     
     queryset = Domain.objects.all()
     permission_classes = [
-        # permissions.IsAuthenticatedOrReadOnly
-        permissions.AllowAny
+        permissions.IsAuthenticatedOrReadOnly
+        # permissions.AllowAny
     ]
 
     serializer_class = DomainSerializer

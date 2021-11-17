@@ -22,9 +22,9 @@ export class AddStrain extends Component {
       species: 2,
     };
 
-    this.api = axios.create({
-      baseURL: `http://localhost:8000/strain/`,
-    });
+    // this.api = axios.create({
+    //   baseURL: `http://localhost:8000/strain/`,
+    // });
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.submit = this.submit.bind(this);
@@ -57,13 +57,28 @@ export class AddStrain extends Component {
 
     console.log("formdata", fd);
 
-    await this.api
-      .post("/", fd)
+    await axios
+      .post("strain/", fd, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access"),
+        },
+      })
       .then((response) => {
         alert(response.statusText + ": " + response.data.strain_name);
       })
       .then((data) => console.log(data))
-      .catch((error) => console.log("Error detected: " + error));
+      .catch((error) => {
+        // console.log("Error detected: " + JSON.stringify(error, null, 4));
+        // for (const val in Object.values(error)) {
+        //   console.log("value", error[val]);
+        // }
+        // alert("Error detected: " + error.number);
+        if (error.message === "Request failed with status code 403") {
+          alert("You are not logged in. To continue, please login first.");
+        } else {
+          console.log(error);
+        }
+      });
 
     // await fetch("http://localhost:8000/strain/", {
     //   method: "POST",

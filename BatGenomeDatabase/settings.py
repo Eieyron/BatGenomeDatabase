@@ -58,11 +58,16 @@ INSTALLED_APPS = [
 
     'corsheaders',
     'rest_framework',
+    'rest_framework_simplejwt',
     'django_filters',
 
     'Strain',
     'Taxonomy',
+    'User',
 ]
+
+# CSRF_COOKIE_SECURE = False
+# SESSION_COOKIE_SECURE = False
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -93,6 +98,7 @@ TEMPLATES = [
     },
 ]
 
+# AUTH_USER_MODEL = 'User.Account'
 ASGI_APPLICATION = "BatGenomeDatabase.asgi.application"
 WSGI_APPLICATION = 'BatGenomeDatabase.wsgi.application'
 
@@ -104,9 +110,12 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',
         'rest_framework.parsers.FileUploadParser',
     ],
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
-    # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+   ),
 }
 
 # Database

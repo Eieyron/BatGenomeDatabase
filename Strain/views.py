@@ -16,7 +16,7 @@ class StrainViewSet(viewsets.ModelViewSet):
     
     queryset = Strain.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticatedOrReadOnly
     ]
 
     serializer_class = StrainSerializer

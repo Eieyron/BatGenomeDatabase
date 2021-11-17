@@ -143,13 +143,22 @@ export default class StrainContent extends Component {
     console.log("formdata", fd);
 
     await axios
-      .patch("http://localhost:8000/strain/" + this.props.id + "/", fd)
+      .patch("http://localhost:8000/strain/" + this.props.id + "/", fd, {
+        headers: {
+          Authorization: "Bearer " + localStorage.access,
+        },
+      })
       .then((response) => {
         alert(response.statusText + ": " + response.data.strain_name);
         console.log(response);
       })
       .then((data) => console.log(data))
-      .catch((error) => console.log("Error detected: " + error));
+      .catch((error) => {
+        console.log("Error detected: " + error);
+        if (error.message === "Request failed with status code 403") {
+          alert("You are not logged in. Please log in first.");
+        }
+      });
 
     this.componentDidMount();
     // window.location.reload();

@@ -43,3 +43,8 @@
   text-decoration: none;
   margin-left: 20px;
 }
+
+.logout_button {
+  width: 25px;
+  height: 25px;
+}

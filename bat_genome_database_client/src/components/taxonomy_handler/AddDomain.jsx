@@ -23,9 +23,9 @@ export class AddDomain extends Component {
 
     console.log(this.state);
 
-    this.api = axios.create({
-      baseURL: "http://localhost:8000/tax/" + this.props.category + "/",
-    });
+    // this.api = axios.create({
+    //   baseURL: "http://localhost:8000/tax/" + this.props.category + "/",
+    // });
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.submit = this.submit.bind(this);
@@ -56,8 +56,8 @@ export class AddDomain extends Component {
       fd.append(key, value);
     }
 
-    await this.api
-      .post("/", fd)
+    await axios
+      .post("tax/" + this.props.category + "/", fd)
       .then((response) => {
         alert(response.statusText + ": " + response.data.category_name);
       })

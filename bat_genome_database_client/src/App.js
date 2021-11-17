@@ -2,7 +2,16 @@ import Topbar from "./components/topbar/Topbar";
 import { Route, Router, Switch } from "react-router-dom";
 import routes from "./Routes";
 import history from "./history";
+import axios from "axios";
 import CategoryList from "./components/taxonomy_handler/CategoryList";
+
+if (localStorage.logged_in === undefined) {
+  localStorage.logged_in = false;
+}
+
+axios.defaults.baseURL = "http://localhost:8000/";
+axios.defaults.headers.common["Authorization"] =
+  "Bearer " + localStorage.access;
 
 function App() {
   return (

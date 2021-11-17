@@ -17,15 +17,11 @@ export default class StrainList extends Component {
       isLoaded: false,
     };
 
-    this.api = axios.create({
-      baseURL: `http://localhost:8000/strain/`,
-    });
-
     this.delete = this.delete.bind(this);
   }
 
   componentDidMount() {
-    fetch("http://127.0.0.1:8000/strain/")
+    fetch(axios.defaults.baseURL + "strain/")
       .then((res) => res.json())
       .then((json) => {
         this.setState({
@@ -36,7 +32,7 @@ export default class StrainList extends Component {
   }
 
   async delete(id) {
-    await this.api
+    await axios
       .delete("/" + id + "/")
       .then((response) => {
         alert(
@@ -45,10 +41,17 @@ export default class StrainList extends Component {
             : "something went wrong"
         );
       })
-      .then((data) => console.log(data))
-      .catch((error) => console.log("Error detected: " + error));
-
-    window.location.reload();
+      .then((data) => {
+        console.log(data);
+        window.location.reload();
+      })
+      .catch((error) => {
+        if (error.message === "Request failed with status code 403") {
+          alert("You are not logged in. To continue, please login first.");
+        } else {
+          console.log(error);
+        }
+      });
   }
 
   render() {
