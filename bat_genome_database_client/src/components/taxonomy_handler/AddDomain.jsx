@@ -62,7 +62,13 @@ export class AddDomain extends Component {
         alert(response.statusText + ": " + response.data.category_name);
       })
       .then((data) => console.log(data))
-      .catch((error) => console.log("Error detected: " + error));
+      .catch((error) => {
+        if ([403, 401].includes(error.request.status)) {
+          alert("You are not logged in. To continue, please login first.");
+        } else {
+          alert(error.request.response);
+        }
+      });
 
     window.location.reload();
   }

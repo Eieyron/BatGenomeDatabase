@@ -15,13 +15,17 @@ export default class StrainList extends Component {
         },
       ],
       isLoaded: false,
+      search_type: "id",
+      search_term: "",
     };
 
     this.delete = this.delete.bind(this);
+    this.load_data = this.load_data.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  componentDidMount() {
-    fetch(axios.defaults.baseURL + "strain/")
+  async load_data(query = "") {
+    await fetch(axios.defaults.baseURL + "strain/" + query)
       .then((res) => res.json())
       .then((json) => {
         this.setState({
@@ -31,9 +35,47 @@ export default class StrainList extends Component {
       });
   }
 
+  async handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    if (target.type === "file") {
+      this.state[name] = target.files[0];
+    } else {
+      await this.setState({
+        [name]: value,
+      });
+    }
+
+    console.log("term", this.state.search_term);
+    console.log("type", this.state.search_type);
+
+    if (target.name === "search_term") {
+      if (this.state.search_term && this.state.search_type) {
+        await this.load_data(
+          "?" + this.state.search_type + "__icontains=" + this.state.search_term
+        );
+        console.log("list refreshed");
+      } else if (target.value === "") {
+        await this.load_data();
+      }
+    }
+  }
+
+  async componentWillMount() {
+    if (this.state.search_type && this.state.search_term) {
+      await this.load_data(
+        this.state.search_type + "__icontains=" + this.state.search_term
+      );
+    } else {
+      await this.load_data();
+    }
+  }
+
   async delete(id) {
     await axios
-      .delete("/" + id + "/")
+      .delete("strain/" + id + "/")
       .then((response) => {
         alert(
           response.status === 204
@@ -46,10 +88,10 @@ export default class StrainList extends Component {
         window.location.reload();
       })
       .catch((error) => {
-        if (error.message === "Request failed with status code 403") {
+        if ([403, 401].includes(error.request.status)) {
           alert("You are not logged in. To continue, please login first.");
         } else {
-          console.log(error);
+          alert(error.request.response);
         }
       });
   }
@@ -57,6 +99,23 @@ export default class StrainList extends Component {
   render() {
     return (
       <div className="strain_content_body">
+        <div className="mid_title_bar">
+          <div className="select">
+            <select name="search_type" onChange={this.handleInputChange}>
+              <option value="id">ID</option>
+              <option value="strain_name">Name</option>
+              <option value="scientific_name">Scientific Name</option>
+            </select>
+          </div>
+          <input
+            type="text"
+            name="search_term"
+            className="search_bar"
+            placeholder={"Search by " + this.state.search_type}
+            onChange={this.handleInputChange}
+          />
+        </div>
+
         <table className="strainlist">
           <tr>
             <th>ID</th>

@@ -8,18 +8,18 @@ export class AddStrain extends Component {
     super(props);
 
     this.state = {
-      strain_name: "test",
-      type_strain: null,
-      scientific_name: "test",
-      medium: "test",
-      medium_growth: true,
-      medium_composition: "test",
-      temperature: 20,
-      temperature_type: "test",
-      temperature_range: "test",
-      reference_list: "{}",
+      // strain_name: "test",
+      // type_strain: null,
+      // scientific_name: "test",
+      // medium: "test",
+      // medium_growth: true,
+      // medium_composition: "test",
+      // temperature: 20,
+      // temperature_type: "test",
+      // temperature_range: "test",
+      // reference_list: "{}",
       species_only: true,
-      species: 2,
+      // species: 2,
     };
 
     // this.api = axios.create({
@@ -28,6 +28,14 @@ export class AddStrain extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.submit = this.submit.bind(this);
+    this.setParentID = this.setParentID.bind(this);
+  }
+
+  setParentID(id, taxonomical_name) {
+    // this.state[taxonomical_name] =
+    this.setState({
+      [taxonomical_name]: id,
+    });
   }
 
   handleInputChange(event) {
@@ -68,23 +76,12 @@ export class AddStrain extends Component {
       })
       .then((data) => console.log(data))
       .catch((error) => {
-        // console.log("Error detected: " + JSON.stringify(error, null, 4));
-        // for (const val in Object.values(error)) {
-        //   console.log("value", error[val]);
-        // }
-        // alert("Error detected: " + error.number);
-        if (error.message === "Request failed with status code 403") {
+        if ([403, 401].includes(error.request.status)) {
           alert("You are not logged in. To continue, please login first.");
         } else {
-          console.log(error);
+          alert(error.request.response);
         }
       });
-
-    // await fetch("http://localhost:8000/strain/", {
-    //   method: "POST",
-    //   body: JSON.stringify(this.state),
-    //   headers: { "Content-Type": "application/json" },
-    // }).then((data) => console.log(data));
   }
 
   render() {
@@ -175,6 +172,7 @@ export class AddStrain extends Component {
               category="strain"
               onChange={this.handleInputChange}
               category_contents={["Species"]}
+              setDefault={this.setParentID}
             />
           </div>
         ) : (
@@ -185,6 +183,7 @@ export class AddStrain extends Component {
                 category="phylum"
                 onChange={this.handleInputChange}
                 category_contents={["Domain"]}
+                setDefault={this.setParentID}
               />
             </div>
             <div className="form_content">
@@ -193,6 +192,7 @@ export class AddStrain extends Component {
                 category="class"
                 onChange={this.handleInputChange}
                 category_contents={["Phylum"]}
+                setDefault={this.setParentID}
               />
             </div>
             <div className="form_content">
@@ -201,6 +201,7 @@ export class AddStrain extends Component {
                 category="order"
                 onChange={this.handleInputChange}
                 category_contents={["Class"]}
+                setDefault={this.setParentID}
               />
             </div>
             <div className="form_content">
@@ -209,6 +210,7 @@ export class AddStrain extends Component {
                 category="family"
                 onChange={this.handleInputChange}
                 category_contents={["Order"]}
+                setDefault={this.setParentID}
               />
             </div>
             <div className="form_content">
@@ -217,6 +219,7 @@ export class AddStrain extends Component {
                 category="genus"
                 onChange={this.handleInputChange}
                 category_contents={["Family"]}
+                setDefault={this.setParentID}
               />
             </div>
             <div className="form_content">
@@ -225,6 +228,7 @@ export class AddStrain extends Component {
                 category="species"
                 onChange={this.handleInputChange}
                 category_contents={["Genus"]}
+                setDefault={this.setParentID}
               />
             </div>
             <div className="form_content">
@@ -233,6 +237,7 @@ export class AddStrain extends Component {
                 category="strain"
                 onChange={this.handleInputChange}
                 category_contents={["Species"]}
+                setDefault={this.setParentID}
               />
             </div>
           </>

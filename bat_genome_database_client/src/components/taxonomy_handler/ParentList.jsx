@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./TaxonomyHandler.css";
+import axios from "axios";
 
 function getParent(category) {
   if (category === "domain") return null;
@@ -16,7 +17,7 @@ export default class ParentList extends Component {
   constructor(props) {
     super(props);
 
-    console.log("tjhis is being constructed");
+    console.log("this is being constructed");
 
     this.state = {
       content: {},
@@ -24,10 +25,11 @@ export default class ParentList extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log("this is being mounted");
-    fetch(
-      "http://127.0.0.1:8000/tax/" +
+  async componentDidMount() {
+    console.log("parentlist is being mounted");
+    await fetch(
+      axios.defaults.baseURL +
+        "tax/" +
         getParent(this.props.category.toLowerCase()) +
         "/"
     )
@@ -39,7 +41,24 @@ export default class ParentList extends Component {
         });
       });
     // this.props.onChange(event);
+    if (this.props.setDefault) {
+      this.props.setDefault(
+        this.state.content[0].id,
+        getParent(this.props.category.toLowerCase())
+      );
+    }
   }
+
+  // componentDidUpdate() {
+  //   // if (this.props.setDefault) {
+  //   //   this.props.setDefault(
+  //   //     this.state.content[0].id,
+  //   //     this.props.category.toLowerCase()
+  //   //   );
+  //     // console.log("is this loading");
+  //     // console.log(this.state.content);
+  //   }
+  // }
 
   render() {
     if (this.state.isLoaded) {

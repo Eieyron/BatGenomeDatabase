@@ -7,10 +7,21 @@ from .models import Strain
 from Taxonomy.models import Domain, Phylum, Order, Class, Family, Genus, Species
 from Taxonomy.serializer import DomainSerializer, PhylumSerializer, OrderSerializer, ClassSerializer, FamilySerializer, GenusSerializer, SpeciesSerializer
 import json, base64
+from django_filters import rest_framework as filters
 
 class Prototype:
 
     pass
+
+class StrainFilter(filters.FilterSet):
+
+    class Meta:
+        model = Strain
+        fields = {
+            'id': ['icontains'],
+            'strain_name': ['icontains'],
+            'scientific_name': ['icontains'],
+        }
 
 class StrainViewSet(viewsets.ModelViewSet):
     
@@ -23,8 +34,8 @@ class StrainViewSet(viewsets.ModelViewSet):
 
     parser_classes = [JSONParser, MultiPartParser, FormParser]
 
-    filter_backends = [DjangoFilterBackend]
-
+    # filter_backends = [DjangoFilterBackend]
+    filterset_class = StrainFilter
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())

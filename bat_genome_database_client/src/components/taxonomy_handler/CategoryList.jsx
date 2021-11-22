@@ -27,8 +27,8 @@ export class CategoryList extends Component {
     this.delete = this.delete.bind(this);
   }
 
-  componentDidMount() {
-    fetch(
+  async componentWillMount() {
+    await fetch(
       axios.defaults.baseURL + "tax/" + this.props.Category.toLowerCase() + "/"
     )
       .then((res) => res.json())
@@ -55,7 +55,13 @@ export class CategoryList extends Component {
         );
       })
       .then((data) => console.log(data))
-      .catch((error) => console.log("Error detected: " + error));
+      .catch((error) => {
+        if ([403, 401].includes(error.request.status)) {
+          alert("You are not logged in. To continue, please login first.");
+        } else {
+          console.log(error);
+        }
+      });
 
     window.location.reload();
   }

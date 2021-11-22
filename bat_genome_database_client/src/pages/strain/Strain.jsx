@@ -11,6 +11,8 @@ export class Strain extends Component {
 
     this.state = {
       component: "list",
+      search_type: "id",
+      // search_term: "1",
     };
 
     this.handleComponent = this.handleComponent.bind(this);
@@ -37,6 +39,7 @@ export class Strain extends Component {
                 <h1 className="title">Add Strain</h1>
               )}
             </div>
+
             <div className="right_title_bar">
               {this.state.component === "list" ? (
                 <svg

@@ -26,10 +26,13 @@ export default class StrainContent extends Component {
     this.editContent = this.editContent.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.update = this.update.bind(this);
+    this.load_info = this.load_info.bind(this);
   }
 
-  componentDidMount() {
-    fetch("http://127.0.0.1:8000/strain/".concat(this.props.id).concat("/"))
+  async load_info() {
+    await fetch(
+      "http://127.0.0.1:8000/strain/".concat(this.props.id).concat("/")
+    )
       .then((res) => res.json())
       .then((json) => {
         this.setState({
@@ -37,6 +40,10 @@ export default class StrainContent extends Component {
           content: json,
         });
       });
+  }
+
+  async componentWillMount() {
+    await this.load_info();
   }
 
   showContents() {
@@ -154,13 +161,15 @@ export default class StrainContent extends Component {
       })
       .then((data) => console.log(data))
       .catch((error) => {
-        console.log("Error detected: " + error);
-        if (error.message === "Request failed with status code 403") {
-          alert("You are not logged in. Please log in first.");
+        // console.log("Error detected: " + error);
+        if ([403, 401].includes(error.request.status)) {
+          alert("You are not logged in. To continue, please login first.");
+        } else {
+          alert(error.request.response);
         }
       });
 
-    this.componentDidMount();
+    this.load_info();
     // window.location.reload();
   }
 

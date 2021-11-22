@@ -27,8 +27,6 @@ export class LoginForm extends Component {
       user: this.state.user,
       // logged_in: false,
     });
-
-    console.log("constructor of Login", localStorage);
   }
 
   handleInputChange(event) {

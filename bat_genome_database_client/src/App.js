@@ -13,6 +13,8 @@ axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.headers.common["Authorization"] =
   "Bearer " + localStorage.access;
 
+// window.onScroll = (e) => console.log("scrolled!");
+
 function App() {
   return (
     <div className="App">

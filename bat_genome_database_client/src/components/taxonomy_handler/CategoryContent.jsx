@@ -131,7 +131,13 @@ export default class CategoryContent extends Component {
         console.log(response);
       })
       .then((data) => console.log(data))
-      .catch((error) => console.log("Error detected: " + error));
+      .catch((error) => {
+        if ([403, 401].includes(error.request.status)) {
+          alert("You are not logged in. To continue, please login first.");
+        } else {
+          console.log(error);
+        }
+      });
 
     this.componentDidMount();
   }

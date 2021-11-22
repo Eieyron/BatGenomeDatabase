@@ -33,6 +33,10 @@ class StrainSerializer(serializers.ModelSerializer):
             'genus',
             'species',
         ]
+        extra_kwargs = {
+                'species_only':   {'required':True},
+                'species':   {'required':True},
+        }
 
     # def validate_type_strain(self, value):
 
@@ -82,6 +86,7 @@ class StrainSerializer(serializers.ModelSerializer):
 
             elif key == "reference_list":
                 strain.reference_list = val
+
 
         if species_only:
             
