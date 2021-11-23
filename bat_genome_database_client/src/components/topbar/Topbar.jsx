@@ -81,7 +81,7 @@ export default class Topbar extends Component {
                     window.location.reload();
                   }}
                 >
-                  <Link className="topBarOption">
+                  <Link className="topBarOption" to="/home">
                     <svg
                       className="w-6 h-6 logout_button"
                       fill="none"

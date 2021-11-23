@@ -106,7 +106,7 @@ ul {
   padding-bottom: 10px;
 }
 
-input[type="text"] {
+.search_bar {
   float: none;
   display: block;
   text-align: left;
@@ -114,7 +114,7 @@ input[type="text"] {
   margin: 0;
   padding: 14px;
 }
-input[type="text"] {
+.search_bar {
   border: 1px solid #ccc;
 }
 

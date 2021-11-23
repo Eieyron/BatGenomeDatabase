@@ -42,7 +42,7 @@ export default class StrainContent extends Component {
       });
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     await this.load_info();
   }
 

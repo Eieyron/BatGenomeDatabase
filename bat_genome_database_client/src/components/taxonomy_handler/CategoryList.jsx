@@ -17,6 +17,8 @@ export class CategoryList extends Component {
       ],
       isLoaded: false,
       content: "list",
+      search_type: "id",
+      search_term: "",
     };
     this.api = axios.create({
       baseURL:
@@ -25,11 +27,16 @@ export class CategoryList extends Component {
 
     this.addCategory = this.addCategory.bind(this);
     this.delete = this.delete.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  async componentWillMount() {
+  async load_data(query = "") {
     await fetch(
-      axios.defaults.baseURL + "tax/" + this.props.Category.toLowerCase() + "/"
+      axios.defaults.baseURL +
+        "tax/" +
+        this.props.Category.toLowerCase() +
+        "/" +
+        query
     )
       .then((res) => res.json())
       .then((json) => {
@@ -38,6 +45,44 @@ export class CategoryList extends Component {
           items: json,
         });
       });
+  }
+
+  async componentDidMount() {
+    if (this.state.search_type && this.state.search_term) {
+      await this.load_data(
+        this.state.search_type + "__icontains=" + this.state.search_term
+      );
+    } else {
+      await this.load_data();
+    }
+  }
+
+  async handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    if (target.type === "file") {
+      this.state[name] = target.files[0];
+    } else {
+      await this.setState({
+        [name]: value,
+      });
+    }
+
+    console.log("term", this.state.search_term);
+    console.log("type", this.state.search_type);
+
+    if (target.name === "search_term") {
+      if (this.state.search_term && this.state.search_type) {
+        await this.load_data(
+          "?" + this.state.search_type + "__icontains=" + this.state.search_term
+        );
+        console.log("list refreshed");
+      } else if (target.value === "") {
+        await this.load_data();
+      }
+    }
   }
 
   addCategory() {
@@ -72,6 +117,22 @@ export class CategoryList extends Component {
         <Sidebar Crumb={this.props.Crumb} Match={this.props.match} />
         <div className="main_name">
           <div className="main_name_center">{this.props.Category} Database</div>{" "}
+          <div className="mid_title_bar">
+            <div className="select">
+              <select name="search_type" onChange={this.handleInputChange}>
+                <option value="id">ID</option>
+                <option value="category_name">Name</option>
+                <option value="scientific_name">Scientific Name</option>
+              </select>
+            </div>
+            <input
+              type={this.state.search_type === "id" ? "number" : "text"}
+              name="search_term"
+              className="search_bar"
+              placeholder={"Search by " + this.state.search_type}
+              onChange={this.handleInputChange}
+            />
+          </div>
           <div>
             {this.state.content === "list" ? (
               <svg

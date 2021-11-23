@@ -63,7 +63,7 @@ export default class StrainList extends Component {
     }
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     if (this.state.search_type && this.state.search_term) {
       await this.load_data(
         this.state.search_type + "__icontains=" + this.state.search_term
@@ -108,7 +108,7 @@ export default class StrainList extends Component {
             </select>
           </div>
           <input
-            type="text"
+            type={this.state.search_type === "id" ? "number" : "text"}
             name="search_term"
             className="search_bar"
             placeholder={"Search by " + this.state.search_type}

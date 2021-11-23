@@ -2,11 +2,8 @@ from .models import Domain, Phylum, Class, Order, Family, Genus, Species
 from rest_framework import viewsets, permissions, status
 from .serializer import DomainSerializer, PhylumSerializer, ClassSerializer, OrderSerializer, FamilySerializer, GenusSerializer, SpeciesSerializer
 from rest_framework.response import Response
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.parsers import FormParser, MultiPartParser,JSONParser
-
-
-# Create your views here.
+from .filters import DomainFilter, PhylumFilter, ClassFilter, OrderFilter, FamilyFilter, GenusFilter, SpeciesFilter
 
 class DomainViewSet(viewsets.ModelViewSet):
     
@@ -20,7 +17,7 @@ class DomainViewSet(viewsets.ModelViewSet):
 
     parser_classes = [JSONParser, MultiPartParser, FormParser]
 
-    filter_backends = [DjangoFilterBackend]
+    filterset_class = DomainFilter
 
 class PhylumViewSet(viewsets.ModelViewSet):
     
@@ -34,7 +31,7 @@ class PhylumViewSet(viewsets.ModelViewSet):
 
     parser_classes = [JSONParser, MultiPartParser, FormParser]
 
-    filter_backends = [DjangoFilterBackend]
+    filterset_class = PhylumFilter
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -70,7 +67,7 @@ class ClassViewSet(viewsets.ModelViewSet):
 
     parser_classes = [JSONParser, MultiPartParser, FormParser]
 
-    filter_backends = [DjangoFilterBackend]
+    filterset_class = ClassFilter
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -106,7 +103,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     parser_classes = [JSONParser, MultiPartParser, FormParser]
 
-    filter_backends = [DjangoFilterBackend]
+    filterset_class = OrderFilter
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -142,7 +139,7 @@ class FamilyViewSet(viewsets.ModelViewSet):
 
     parser_classes = [JSONParser, MultiPartParser, FormParser]
 
-    filter_backends = [DjangoFilterBackend]
+    filterset_class = FamilyFilter
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -178,7 +175,7 @@ class GenusViewSet(viewsets.ModelViewSet):
 
     parser_classes = [JSONParser, MultiPartParser, FormParser]
 
-    filter_backends = [DjangoFilterBackend]
+    filterset_class = GenusFilter
 
     def create(self, request, *args, **kwargs):
 
@@ -221,7 +218,7 @@ class SpeciesViewSet(viewsets.ModelViewSet):
 
     parser_classes = [JSONParser, MultiPartParser, FormParser]
 
-    filter_backends = [DjangoFilterBackend]
+    filterset_class = SpeciesFilter
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
