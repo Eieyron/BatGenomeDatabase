@@ -8,13 +8,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Build the Docker image
-        
+      - name: Logging into Docker
         run: echo "logging into Docker"
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PW}}
-        
+
+
+      - uses: actions/checkout@v2
+      - name: Build the Docker image  
         run: echo "building latest image"
         run: docker build -t "avmagnaye/batgenomedatabase:latest" .
 
+      - uses: actions/checkout@v2
+      - name: Pushing the Docker Image
         run: echo "pushing image to Docker Repositoy"
         run: docker image push "avmagnaye/batgenomedatabase:latest"
