@@ -18,4 +18,5 @@ jobs:
         run: docker build -t "avmagnaye/batgenomedatabase:latest" .
 
         run: echo "pushing image to Docker Repositoy"
+        
         run: docker image push "avmagnaye/batgenomedatabase:latest"
