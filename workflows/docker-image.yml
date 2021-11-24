@@ -1,8 +1,7 @@
 name: Docker Image CI
 
-on:
-  push:
-    branches: [deploy]
+on: [push, pull_request]
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,5 +17,4 @@ jobs:
         run: docker build -t "avmagnaye/batgenomedatabase:latest" .
 
         run: echo "pushing image to Docker Repositoy"
-        
         run: docker image push "avmagnaye/batgenomedatabase:latest"
