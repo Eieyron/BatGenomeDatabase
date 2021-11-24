@@ -17,6 +17,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: dockerfile
           push: true
           tags: avmagnaye/batgenomedatabase:latest
