@@ -15,7 +15,7 @@ jobs:
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: docker build project
         run: |
-          ker build -t "avmagnaye/batgenomedatabase:latest" .
+          docker build -t "avmagnaye/batgenomedatabase:latest" .
       - name: docker push
         run: |
           docker push avmagnaye/batgenomedatabase:latest
