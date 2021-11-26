@@ -125,7 +125,7 @@ local_development = {
     'default':{
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'BatGenomeDB',
-        'HOST': 'localhost'
+        'HOST': 'localhost',
         'USER': 'root',
         'PASSWORD': '1234'
     }
