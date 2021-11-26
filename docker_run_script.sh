@@ -3,7 +3,7 @@
 # script to run docker images
 
 docker kill $(docker ps -q) # kills all running containers
-docker system prune -a # deletes all stopped containers and images
+docker system prune -a -f# deletes all stopped containers and images
 
 docker pull avmagnaye/batgenomedatabase:latest
 
