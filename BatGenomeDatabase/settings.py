@@ -135,7 +135,7 @@ to_push = {
     'default':{
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'BatGenomeDB',
-        'HOST': '192.168.65.2', # builtin docker host 
+        'HOST': 'localhost', # builtin docker host 
         'PORT': '3306',
         'USER': 'admin', # uplb
         'PASSWORD': 'uplbserv1234'#uplb
