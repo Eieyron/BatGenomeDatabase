@@ -121,30 +121,39 @@ REST_FRAMEWORK = {
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # },
-    # 'default':{
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'BatGenomeDB',
-    #     'HOST': 'localhost',
-    #     'PORT': '3306',
-    #     'USER': 'root',
-    #     'PASSWORD': '1234'
-    # }
+local_development = {
     'default':{
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'BatGenomeDB',
-        # 'HOST': 'localhost' # localhost
-        'HOST': '192.168.65.2', # builtin docker host 
-        'PORT': '3306',
+        'HOST': 'localhost'
         'USER': 'root',
         'PASSWORD': '1234'
     }
 }
 
+to_push = {
+    'default':{
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'BatGenomeDB',
+        'HOST': '192.168.65.2', # builtin docker host 
+        'PORT': '3306',
+        'USER': 'admin', # uplb
+        'PASSWORD': 'uplbserv1234'#uplb
+    }
+}
+
+remote_development = {
+    'default':{
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'BatGenomeDB',
+        'HOST': '202.92.144.124', # uplb 
+        'PORT': '3306',
+        'USER': 'admin', # uplb
+        'PASSWORD': 'uplbserv1234'#uplb
+    }
+}
+
+DATABASES = to_push
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
